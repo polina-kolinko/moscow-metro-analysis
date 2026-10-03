@@ -26,16 +26,6 @@ metro_data = passenger_flow.merge(station_coordinates, on=['Metro station name',
 unmatched = metro_data[metro_data['Средняя_долгота'].isna()]
 unmatched = unmatched[['Metro station name','Line name']].drop_duplicates()
 
-#print(passenger_flow[passenger_flow['Metro station name'] == 'Шелепиха'])
-#print(metro_entrances[['Metro station name','Line name','Name']][metro_entrances['Metro station name'] == 'Шелепиха'])
-#print(passenger_flow[passenger_flow['Metro station name'] == 'Деловой центр'])
-#print(metro_entrances[['Metro station name','Line name','Name']][metro_entrances['Metro station name'] == 'Деловой центр'])
-
-#print(metro_entrances.head())
-#print(metro_entrances.shape)
-#print(metro_entrances.dtypes)
-#print(metro_entrances[['Name', 'Metro station name', 'Line name', 'Number of exit', 'Longitude in WGS-84', 'Latitude in WGS-84']].head(10))
-#print(metro_entrances.groupby(['Metro station name', 'Line name']).size())
 
 flow_2025 = passenger_flow[passenger_flow['Year'] == 2025].copy()
 flow_2025['Total passengers'] = flow_2025['Incoming passengers'] + flow_2025['Outgoing passengers']
@@ -57,48 +47,48 @@ quarterly_flow = passenger_flow.groupby(['Year', 'Quarter'])['Total passengers']
 quarterly_flow['Period'] = quarterly_flow['Year'].astype(str) + ' ' + quarterly_flow['Quarter'].astype(str)
 
 
-#x = quarterly_flow['Period']
-#y = quarterly_flow['Total passengers'] / 1_000_000
-#plt.figure(figsize=(12, 6))
-#plt.plot(x, y)
-#plt.xticks(rotation=45)
-#plt.tight_layout()
-#plt.title('Динамика пассажиропотока Московского метро по кварталам')
-#plt.xlabel('период')
-#plt.ylabel('общий пассажиропоток, млн')
-#plt.savefig("images/quarterly_passenger_flow.png")
+x = quarterly_flow['Period']
+y = quarterly_flow['Total passengers'] / 1_000_000
+plt.figure(figsize=(12, 6))
+plt.plot(x, y)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.title('Динамика пассажиропотока Московского метро по кварталам')
+plt.xlabel('период')
+plt.ylabel('общий пассажиропоток, млн')
+plt.savefig("images/quarterly_passenger_flow.png")
+plt.close()
 #plt.show()
 
 full_years_flow = quarterly_flow[quarterly_flow['Year'] <= 2025]
 full_years_flow = full_years_flow.groupby(['Quarter'])['Total passengers'].mean()
 
-#x = top_10_2025['Metro station name']
-#y = top_10_2025['Total passengers'] / 1_000_000
-#plt.figure(figsize=(12, 6))
-#plt.barh(x, y)
-#plt.gca().invert_yaxis()
-#plt.title('Топ-10 станций по пассажиропотоку в 2025 году')
-#plt.xlabel('Пассажиропоток, млн')
-#plt.tight_layout()
-#plt.savefig("images/top_10_stations_2025.png")
+x = top_10_2025['Metro station name']
+y = top_10_2025['Total passengers'] / 1_000_000
+plt.figure(figsize=(12, 6))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.title('Топ-10 станций по пассажиропотоку в 2025 году')
+plt.xlabel('Пассажиропоток, млн')
+plt.tight_layout()
+plt.savefig("images/top_10_stations_2025.png")
+plt.close()
 #plt.show()
 
 avg_station_flow_by_line_2025 = avg_station_flow_by_line_2025.sort_values(by='Total passengers',ascending=False)
-#x = avg_station_flow_by_line_2025['Line name']
-#y = avg_station_flow_by_line_2025['Total passengers'] / 1_000_000
-#plt.figure(figsize=(12, 6))
-#plt.barh(x, y)
-#plt.gca().invert_yaxis()
-#plt.title('Средний пассажиропоток на станцию по линиям метро, 2025')
-#plt.xlabel('Пассажиропоток, млн')
-#plt.tight_layout()
-#plt.savefig("images/avg_station_flow_by_line_2025.png")
+x = avg_station_flow_by_line_2025['Line name']
+y = avg_station_flow_by_line_2025['Total passengers'] / 1_000_000
+plt.figure(figsize=(12, 6))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.title('Средний пассажиропоток на станцию по линиям метро, 2025')
+plt.xlabel('Пассажиропоток, млн')
+plt.tight_layout()
+plt.savefig("images/avg_station_flow_by_line_2025.png")
+plt.close()
 #plt.show()
 
 metro_map = folium.Map(location=[55.75, 37.62],zoom_start=10)
-#for index, row in station_coordinates.iterrows():
-#    folium.Marker(location=[row['Средняя_широта'], row['Средняя_долгота']], popup=row['Metro station name']).add_to(metro_map)
-#metro_map.save("metro_map.html")
 
 map_data = station_flow_2025.merge(station_coordinates, on=['Metro station name','Line name'], how='left')
 #print(map_data[['Средняя_широта','Средняя_долгота']].isna().sum())
