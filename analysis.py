@@ -81,3 +81,15 @@ full_years_flow = full_years_flow.groupby(['Quarter'])['Total passengers'].mean(
 #plt.tight_layout()
 #plt.savefig("images/top_10_stations_2025.png")
 #plt.show()
+
+avg_station_flow_by_line_2025 = avg_station_flow_by_line_2025.sort_values(by='Total passengers',ascending=False)
+#x = avg_station_flow_by_line_2025['Line name']
+#y = avg_station_flow_by_line_2025['Total passengers'] / 1_000_000
+#plt.figure(figsize=(12, 6))
+#plt.barh(x, y)
+#plt.gca().invert_yaxis()
+#plt.title('Средний пассажиропоток на станцию по линиям метро, 2025')
+#plt.xlabel('Пассажиропоток, млн')
+#plt.tight_layout()
+#plt.savefig("images/avg_station_flow_by_line_2025.png")
+#plt.show()
