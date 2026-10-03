@@ -40,28 +40,12 @@
 
 Для данных за 2025 год была построена интерактивная карта станций.
 
-[Открыть карту](metro_map.html)
+[Открыть интерактивную карту](https://polina-kolinko.github.io/moscow-metro-analysis/metro_map.html)
 
 Размер кружка на карте зависит от пассажиропотока станции. При нажатии можно посмотреть название станции, линию и значение пассажиропотока.
 
 Станции, для которых не удалось найти координаты, на карту не добавлялись. Также были исключены записи с нулевым пассажиропотоком.
 
-## Структура проекта
-
-```text
-moscow-metro-analysis/
-├── data/
-│   ├── passenger_flow.csv
-│   └── metro_entrances.csv
-├── images/
-│   ├── quarterly_passenger_flow.png
-│   ├── top_10_stations_2025.png
-│   └── avg_station_flow_by_line_2025.png
-├── analysis.py
-├── metro_map.html
-├── requirements.txt
-└── README.md
-```
 
 Для работы используются Python, pandas, matplotlib и folium.
 

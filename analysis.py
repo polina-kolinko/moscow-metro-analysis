@@ -91,9 +91,7 @@ plt.close()
 metro_map = folium.Map(location=[55.75, 37.62],zoom_start=10)
 
 map_data = station_flow_2025.merge(station_coordinates, on=['Metro station name','Line name'], how='left')
-#print(map_data[['Средняя_широта','Средняя_долгота']].isna().sum())
 missing_coordinates = map_data[map_data['Средняя_широта'].isna()]
-#print(missing_coordinates)
 map_data_clean = map_data.dropna(subset=['Средняя_широта', 'Средняя_долгота'])
 map_data_plot = map_data_clean[map_data_clean['Total passengers'] > 0]
 
