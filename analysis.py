@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import folium
 
 passenger_flow = pd.read_csv('data/passenger_flow.csv', sep=';')
 passenger_flow = passenger_flow.drop(columns='Unnamed: 7')
@@ -93,3 +94,37 @@ avg_station_flow_by_line_2025 = avg_station_flow_by_line_2025.sort_values(by='To
 #plt.tight_layout()
 #plt.savefig("images/avg_station_flow_by_line_2025.png")
 #plt.show()
+
+metro_map = folium.Map(location=[55.75, 37.62],zoom_start=10)
+#for index, row in station_coordinates.iterrows():
+#    folium.Marker(location=[row['Средняя_широта'], row['Средняя_долгота']], popup=row['Metro station name']).add_to(metro_map)
+#metro_map.save("metro_map.html")
+
+map_data = station_flow_2025.merge(station_coordinates, on=['Metro station name','Line name'], how='left')
+#print(map_data[['Средняя_широта','Средняя_долгота']].isna().sum())
+missing_coordinates = map_data[map_data['Средняя_широта'].isna()]
+#print(missing_coordinates)
+map_data_clean = map_data.dropna(subset=['Средняя_широта', 'Средняя_долгота'])
+map_data_plot = map_data_clean[map_data_clean['Total passengers'] > 0]
+
+
+for index, row in map_data_plot.iterrows():
+    radius = 3 + row['Total passengers'] / 3_000_000
+
+    popup_text = (
+        f"Станция: {row['Metro station name']}<br>"
+        f"Линия: {row['Line name']}<br>"
+        f"Пассажиропоток: {row['Total passengers']}"
+    )
+
+    folium.CircleMarker(
+        location=[row['Средняя_широта'], row['Средняя_долгота']],
+        radius=radius,
+        popup=popup_text,
+        color='blue',
+        fill=True,
+        fill_color='blue',
+        fill_opacity=0.6
+    ).add_to(metro_map)
+
+metro_map.save("metro_map.html")
