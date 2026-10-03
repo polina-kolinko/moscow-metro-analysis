@@ -57,16 +57,27 @@ quarterly_flow['Period'] = quarterly_flow['Year'].astype(str) + ' ' + quarterly_
 
 
 #x = quarterly_flow['Period']
-#y = quarterly_flow['Total passengers']
+#y = quarterly_flow['Total passengers'] / 1_000_000
 #plt.figure(figsize=(12, 6))
-#lt.plot(x, y)
+#plt.plot(x, y)
 #plt.xticks(rotation=45)
 #plt.tight_layout()
 #plt.title('Динамика пассажиропотока Московского метро по кварталам')
 #plt.xlabel('период')
-#plt.ylabel('общий пассажиропоток')
+#plt.ylabel('общий пассажиропоток, млн')
+#plt.savefig("images/quarterly_passenger_flow.png")
 #plt.show()
 
 full_years_flow = quarterly_flow[quarterly_flow['Year'] <= 2025]
 full_years_flow = full_years_flow.groupby(['Quarter'])['Total passengers'].mean()
-print(full_years_flow)
+
+#x = top_10_2025['Metro station name']
+#y = top_10_2025['Total passengers'] / 1_000_000
+#plt.figure(figsize=(12, 6))
+#plt.barh(x, y)
+#plt.gca().invert_yaxis()
+#plt.title('Топ-10 станций по пассажиропотоку в 2025 году')
+#plt.xlabel('Пассажиропоток, млн')
+#plt.tight_layout()
+#plt.savefig("images/top_10_stations_2025.png")
+#plt.show()
